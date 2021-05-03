@@ -1,0 +1,315 @@
+openapi: 3.0.0
+info:
+  title: Food API INFORMATION
+  version: 1.0.0
+paths:
+  /foods:
+    get:
+      parameters: 
+        - in: query
+          name: calories
+          description: Calories less than ...
+          required: false
+          schema:
+            type: number
+            example: 300
+        - in: query
+          name: name
+          description: Food name
+          required: false
+          schema:
+            type: string
+            example: "Egg"
+      responses:
+        '200':
+          description: this is a list of the foods
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    Name:
+                      type: string
+                      example: "EGG"
+                    Kilocalories:
+                      type: number
+                      example: 148
+                    Alpha-Carotene:
+                      type: number
+                      example: 0
+                    Beta-Carotene:
+                      type: number
+                      example: 0
+                    Carbohydrate:
+                      type: number
+                      example: 1.05
+                    Cholesterol:
+                      type: number
+                      example: 432
+                    Choline:
+                      type: number
+                      example: 0
+                    Fiber:
+                      type: number
+                      example: 0
+                    Lycopene:
+                      type: number
+                      example: 0
+                    Manganese:
+                      type: number
+                      example: 1.05
+                    Protein:
+                      type: number
+                      example: 1.05
+                    Selenium:
+                      type: number
+                      example: 1.05
+                    Sugar-Total:
+                      type: number
+                      example: 0
+                    Zinc:
+                      type: number
+                      example: 1.38
+                    Vitamin-B12:
+                      type: number
+                      example: 1.07
+                    Vitamin-B6:
+                      type: number
+                      example: 0.162
+                    Vitamin-C:
+                      type: number
+                      example: 0
+                    Vitamin-E:
+                      type: number
+                      example: 0
+                    Vitamin-K:
+                      type: number
+                      example: 0
+    post:
+      security:
+        - Authentication: []
+      description: Add a new food to the list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Food'
+      responses:
+        '200':
+          description: Food has been added.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Food has been added."
+        '500':
+          description: Food can't add.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Food can't add."
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      security:
+        - Authentication: []
+      description: Delete food
+      parameters: 
+        - in: query
+          name: name
+          required: true
+          schema:
+            type: string
+            example: EGG
+      responses:
+        '200':
+          description: Food has been deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Food has been deleted."
+        '500':
+            description: Food not found.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: "Food not found."
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    put:
+      security:
+        - Authentication: []
+      parameters: 
+        - in: query
+          name: name
+          required: true
+          schema:
+            type: string
+            example: EGG
+      description: Update food
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Food'
+      responses:
+        '200':
+          description: Food has been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Food has been updated."
+        '500':
+          description: Food not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Food not found."
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+                      
+  /BMR:
+    get:
+      parameters:
+        - in: query
+          name: gender
+          description: gender for calculate BMR
+          required: true
+          schema:
+            type: string
+            example: male
+        - in: query
+          name: weight
+          description: Weight for calculate BMR
+          required: true
+          schema:
+            type: number
+            example: 70
+        - in: query
+          name: height
+          description: Height for calculate BMR
+          required: true
+          schema:
+            type: number
+            example: 176
+        - in: query
+          name: age
+          description: Age for calculate BMR
+          required: true
+          schema:
+            type: number
+            example: 20
+      responses:
+        '200':
+          description: BMR
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  BMR:
+                    type: number
+                    example: 1730.0
+components:
+  securitySchemes:
+    Authentication:     # <-- arbitrary name for the security scheme
+      type: http
+      scheme: basic
+  schemas:
+    Food:
+      type: object
+      properties:
+        Name:
+          type: string
+          example: "EGG"
+        Kilocalories:
+          type: number
+          example: 148
+        Alpha-Carotene:
+          type: number
+          example: 0
+        Beta-Carotene:
+          type: number
+          example: 0
+        Carbohydrate:
+          type: number
+          example: 1.05
+        Cholesterol:
+          type: number
+          example: 432
+        Choline:
+          type: number
+          example: 0
+        Fiber:
+          type: number
+          example: 0
+        Lycopene:
+          type: number
+          example: 0
+        Manganese:
+          type: number
+          example: 1.05
+        Protein:
+          type: number
+          example: 1.05
+        Selenium:
+          type: number
+          example: 1.05
+        Sugar-Total:
+          type: number
+          example: 0
+        Zinc:
+          type: number
+          example: 1.38
+        Vitamin-B12:
+          type: number
+          example: 1.07
+        Vitamin-B6:
+          type: number
+          example: 0.162
+        Vitamin-C:
+          type: number
+          example: 0
+        Vitamin-E:
+          type: number
+          example: 0
+        Vitamin-K:
+          type: number
+          example: 0
+    BMR:
+      type: object
+      properties:
+        Name:
+          type: number
+          example: "BMR : 115 " 
+  responses:
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+      headers:
+        WWW_Authenticate:
+          schema:
+            type: string  

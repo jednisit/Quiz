@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info:
+  title: FoodandCalories
+  version: 1.0.0
+paths:
+  /foodData:
+    get:
+      parameters:
+        - in: query
+          name: FoodName
+          description: Food to return
+          required: false
+          schema:
+            type: string
+            example: egg
+      responses:
+        '200':
+          description: Food from request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    name:
+                      type: string
+                      example: egg
+                    kilocalories:
+                      type: integer
+                      example: 148
+                    Alpha-Caroteen:
+                      type: integer
+                      example: 0
+                    Beta-Caroteen:
+                      type: integer
+                      example: 0
+                    Carbohydrate:
+                      type: number
+                      example: 1.05
+                    Cholesterol:
+                      type: integer
+                      example: 432
+                    Choline:
+                      type: integer
+                      example: 0
+                    Fiber:
+                      type: number
+                      example: 0
+                    Lycopene:
+                      type: integer
+                      example: 0
+                    Magnanese:
+                      type: number
+                      example: 0.034
+                    Protein:
+                      type: number
+                      example: 11.95
+                    Selenium:
+                      type: number
+                      example: 30.8
+                    Sugar-total:
+                      type: number
+                      example: 0
+                    Zinc:
+                      type: number
+                      example: 1.38
+                    Vitamin-B12:
+                      type: number
+                      example: 1.07
+                    Vitamin-B6:
+                      type: number
+                      example: 0.162
+                    Vitamin-C:
+                      type: number
+                      example: 0
+                    Vitamin-E:
+                      type: number
+                      example: 0
+                    Vitamin-K:
+                      type: number
+                      example: 0
+        '500':
+          $ref: '#/components/responses/500ApiError'
+  /Calories:
+   get:
+     parameters:
+       - in: query
+         name: Calories
+         description: Calories to return
+         required: false
+         schema:
+           type: integer
+           example: 200
+     responses:
+       '200':
+         description: Food from request
+         content:
+           application/json:
+             schema:
+               type: array
+               items:
+                 properties:
+                  name:
+                      type: string
+                      example: egg
+                  Calories:
+                      type: integer
+                      example: 148
+       '500':
+         $ref: '#/components/responses/500ApiError'
+  /BMR:
+    post:
+      description: BMR caculater
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                height:
+                  type: number
+                  example: 180
+                weight:
+                  type: number
+                  example: 100
+                age:
+                  type: integer
+                  example: 20
+      responses:
+        '200':
+          description: Your BMI.
+          content:
+            application/json:
+             schema:
+              type: array
+              items:
+                properties:
+                 Your BMR:
+                     type: number
+                     example: 2030
+        '500':
+          $ref: '#/components/responses/500ApiError'
+  /Delete:
+    post:
+      responses:
+        '200':
+          description: Delete success.
+        '500':
+          $ref: '#/components/responses/500ApiError'
+  /add:
+    post:
+      responses:
+        '200':
+          description: Add success.
+        '500':
+          $ref: '#/components/responses/500ApiError'
+  /update:
+    put:
+      responses:
+        '200':
+          description: update success.
+        '500':
+          $ref: '#/components/responses/500ApiError'
+          
+    
+components:
+    responses:
+     500ApiError:
+       description: This is unexpected 
+       content:
+         application/json:
+           schema:
+             type: object
+             properties:
+               statusCode:
+                 type: string
+                 example: 500
+               message:
+                 type: string
+                 example: This is an error
+ 
+
+      
+
+                    
